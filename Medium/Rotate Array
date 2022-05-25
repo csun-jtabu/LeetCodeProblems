@@ -1,0 +1,33 @@
+import java.util.Queue;
+
+class Solution {
+    public void rotate(int[] nums, int k) {
+        
+        Queue<Integer> queue = new LinkedList<>();
+        int whileCounter = 0;
+        int offIndex = 0;
+        
+        for(int counter = 0; counter < nums.length; counter++)
+        {
+            queue.add(nums[counter]);
+        }
+        
+        while(!queue.isEmpty())
+        {
+            offIndex = (whileCounter + k) % nums.length;
+            
+            if( offIndex < nums.length )
+            {
+                nums[offIndex] = queue.poll();
+                
+            }
+            else 
+            {
+                nums[whileCounter] = queue.poll();
+            }
+            whileCounter++;
+            
+        }
+        
+    }
+}
