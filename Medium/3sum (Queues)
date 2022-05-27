@@ -1,0 +1,97 @@
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Queue;
+
+class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+        
+        List<List<Integer>> listOfList = new ArrayList<>();
+        List<Integer> numsList = new ArrayList<>();
+        Queue<Integer> queue = new LinkedList<>();
+        
+        int sum;
+        int secondDigit = 0;
+        int thirdDigit;
+        int dupeCounter;
+        int current;
+        int next;
+        
+        Arrays.sort(nums);
+        
+        for(int index = 1; index < nums.length; index++)
+        {
+            queue.add(nums[index]);
+        }
+        
+        for(int counter = 0; counter < nums.length; counter++)
+        {
+            dupeCounter = -1;
+            if(nums.length > 1)
+            {
+                for(int counter2 = 1; counter2 < nums.length; counter2++)
+                {
+                    if(nums[counter] == nums[counter2])
+                    {
+                        dupeCounter++;
+                    }
+                }
+            }
+
+            System.out.println(dupeCounter);
+            
+            while(!queue.isEmpty())
+            {
+                if((nums[counter] == queue.peek()) && (dupeCounter > 1))
+                {
+                    queue.poll();
+                }
+                if(queue.peek() != null)
+                {
+                    secondDigit = queue.poll();
+                }
+                sum = nums[counter] + secondDigit;
+                thirdDigit = (-1) * sum;
+                if(((nums[counter] == 0) && (secondDigit == 0) && (thirdDigit == 0)) && (dupeCounter == 2))
+                {
+                    List<Integer> list = new ArrayList<>();
+                    list.add(nums[counter]);
+                    list.add(secondDigit);
+                    list.add(thirdDigit);
+                    Collections.sort(list);
+                    
+                    if( (!listOfList.contains(list)) )
+                    {
+                        listOfList.add(list);
+                    }
+                    
+                }
+                if(queue.contains(thirdDigit) && (nums.length >= 3))
+                {
+                    List<Integer> list = new ArrayList<>();
+                    list.add(nums[counter]);
+                    list.add(secondDigit);
+                    list.add(thirdDigit);
+                    Collections.sort(list);
+                    
+                    if( (!listOfList.contains(list)) )
+                    {
+                        listOfList.add(list);
+                    }
+                }
+                System.out.println("First: " + nums[counter]);
+                System.out.println("Second: " + secondDigit);
+                System.out.println("Third: " + thirdDigit + "\n");
+                
+            }
+            System.out.println("Queue Refilled");
+            for(int counter2 = counter + 2; counter2 < nums.length; counter2++)
+            {
+                queue.add(nums[counter2]);
+            }
+            
+        }
+        
+        return listOfList;
+    }
+}
