@@ -1,0 +1,32 @@
+class Solution {
+    public boolean isPalindrome(int x) {
+        
+        String numString;
+        boolean evaluation = true;
+        numString = String.valueOf(x);
+        int start = 0;
+        int end = numString.length() - 1;
+        
+        while( (start < end) )
+        {
+            if( (numString.charAt(start) == numString.charAt(end)) && (evaluation != false))
+            {
+                evaluation = true;
+            }
+            else
+            {
+                evaluation = false;
+            }
+            
+            start++;
+            end--;
+        }
+        
+        if(numString.length() <= 1)
+        {
+            evaluation = true;
+        }
+        
+        return evaluation;
+    }
+}
