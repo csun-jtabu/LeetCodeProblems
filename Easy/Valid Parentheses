@@ -1,0 +1,42 @@
+import java.util.Stack;
+import java.util.Map;
+
+class Solution {
+    public boolean isValid(String s) {
+        
+        //(key, value)
+        Map<Character, Character> mapping = new HashMap<>();
+        mapping.put(')', '(');
+        mapping.put(']', '[');
+        mapping.put('}', '{');
+        
+        Stack<Character> stack = new Stack<>();
+        char check;
+        char stackCheck;
+        
+        for(int counter = 0; counter < s.length(); counter++)
+        {
+            check = s.charAt(counter);
+            if(mapping.containsKey(check))
+            {
+                
+                if(stack.isEmpty())
+                {
+                    return false;
+                }
+                stackCheck = stack.pop();
+                if(stackCheck != mapping.get(check))
+                {
+                    return false;
+                }
+                
+            }
+            else
+            {
+                stack.push(check);
+            }
+        }
+        
+        return stack.isEmpty();
+    }
+}
