@@ -1,0 +1,43 @@
+class Solution {
+    public int maximumUnits(int[][] boxTypes, int truckSize) {
+        
+        int totalUnits = 0;
+        int currentBoxes = 0;
+        int boxFit = 0;
+        Arrays.sort(boxTypes, new unitComparator());
+        //Arrays in general: [row][column]
+        //[Max Boxes][Units/Box]
+        
+        for(int counter = 0; counter < boxTypes.length; counter++)
+        {
+            
+            if((currentBoxes + boxTypes[counter][0]) < truckSize)
+            {
+                totalUnits = totalUnits + (boxTypes[counter][0] * boxTypes[counter][1]);
+                currentBoxes = currentBoxes + boxTypes[counter][0];
+            }
+            else
+            {
+                for(int counter2 = 0; counter2 <= boxTypes[counter][0]; counter2++)
+                {
+                    if((currentBoxes + counter2) <= truckSize)
+                    {
+                        boxFit = counter2;
+                    }
+                }
+                totalUnits = totalUnits + (boxFit * boxTypes[counter][1]);
+                currentBoxes = currentBoxes + boxFit;
+                boxFit = 0;
+            }
+        }
+        return totalUnits;
+    }
+}
+
+public class unitComparator implements Comparator<int[]>
+{
+    public int compare(int[] object, int[] object2)
+    {
+        return Integer.valueOf(object2[1]).compareTo(Integer.valueOf(object[1])); 
+    }
+}
